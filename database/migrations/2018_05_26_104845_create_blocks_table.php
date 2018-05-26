@@ -15,7 +15,12 @@ class CreateBlocksTable extends Migration
     {
         Schema::create('blocks', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('block_chain_id')->unsigned();
+            $table->string('previousHash')->nullable();
+            $table->string('hash');
             $table->timestamps();
+
+            $table->foreign('block_chain_id')->references('id')->on('block_chains');
         });
     }
 

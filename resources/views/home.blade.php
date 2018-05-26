@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    Wallet: {{ \Illuminate\Support\Facades\Auth::user()->wallet->key }}
                 </div>
             </div>
         </div>

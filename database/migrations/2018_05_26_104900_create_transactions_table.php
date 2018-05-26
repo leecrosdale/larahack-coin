@@ -15,7 +15,13 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('block_id')->unsigned();
+            $table->string('fromAddress');
+            $table->string('toAddress');
+            $table->string('amount');
             $table->timestamps();
+
+            $table->foreign('block_id')->references('id')->on('blocks');
         });
     }
 
