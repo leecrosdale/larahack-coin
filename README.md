@@ -1,0 +1,1 @@
+larahack-coin
