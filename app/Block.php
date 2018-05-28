@@ -2,28 +2,36 @@
 
 namespace App;
 
+use App\Helpers\Coin;
 use Illuminate\Database\Eloquent\Model;
 
 class Block extends Model
 {
 
     protected $fillable = [
+        'id',
         'previousHash',
-        'hash',
-        'transactions'
+        'hash'
     ];
-
-    protected $casts = [
-        'hash' => 'object'
-    ];
-
 
     public function calculateHash() {
-        return hash(CRYPT_SHA256, $this);
+        return Coin::calcHash($this->previousHash . $this->timestamp . $this->transactions()->get() . $this->nonce);
     }
 
     public function transactions() {
         return $this->hasMany('App\Transaction');
+    }
+
+    public function toArray()
+    {
+
+        return [
+            'id' => $this->id,
+            'transactions' => $this->transactions()->get()->toArray(),
+            'previousHash' => $this->previousHash,
+            'timestamp' => $this->timestamp,
+            'hash' => $this->hash
+        ];
     }
 
 }

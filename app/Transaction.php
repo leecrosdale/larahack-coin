@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
 
+    protected $fillable = [
+        'block_id',
+        'fromAddress',
+        'toAddress',
+        'amount'
+    ];
+
     public function fromWallet() {
         return $this->belongsTo('App\Wallet','fromAddress','key');
     }

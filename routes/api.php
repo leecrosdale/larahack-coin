@@ -16,3 +16,15 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+Route::get('transactions/pending', function() {
+    return \App\Transaction::where('status', 0)->get();
+});
+
+Route::get('block/latest', function() {
+    return \App\Block::all()->last();
+});
+
+Route::post('block/create', 'Api\BlockController@store');
