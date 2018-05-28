@@ -40,7 +40,7 @@
                 'latest_block': 0,
                 'pending_transactions': [],
                 'hash': '',
-                'nonce': 0,
+                'nonce': Math.floor(Math.random() * 999999999),
                 'difficulty': 5,
                 'miningInterval': null,
                 'timestamp': Date.now(),
