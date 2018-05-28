@@ -47,7 +47,7 @@ class BlockController extends Controller
             return response()->json(['status' => 'fail', 'reason' => 'Pending transactions were already mined']);
         }
 
-        $recalc = Coin::calcHash($previousHash . $timeStamp . $request->input('transactions') . $nonce);
+        $recalc = Coin::calcHash(config("coin.difficulty") . Block::all()->last->hash . $timeStamp . $request->input('transactions') . $nonce);
 
         if ($recalc != $hash) {
             return response()->json(['status' => 'fail', 'reason' => "Hashes don't match on recheck"]);
@@ -69,7 +69,7 @@ class BlockController extends Controller
             if (($check->amount / 100 * 2) > 0.01) {
 
                 Transaction::create([
-                    'fromAddress' => $check->toAddress,
+                    'fromAddress' => 'reward',
                     'toAddress' => $winnerKey,
                     'amount' => ($check->amount / 100 * 2)
                 ]);

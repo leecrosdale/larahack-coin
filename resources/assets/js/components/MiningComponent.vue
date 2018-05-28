@@ -159,10 +159,7 @@
                 });
             },
             calculateHash() {
-
-                console.log(this.latest_block.hash + this.timestamp + JSON.stringify(this.pending_transactions) + this.nonce);
-
-                return SHA256(this.latest_block.hash + this.timestamp + JSON.stringify(this.pending_transactions) + this.nonce).toString();
+                return SHA256(this.difficulty + this.latest_block.hash + this.timestamp + JSON.stringify(this.pending_transactions) + this.nonce).toString();
             }
         }
     }
