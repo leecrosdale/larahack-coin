@@ -153,7 +153,14 @@
             getLatestBlock() {
                 var self = this;
                 return axios.get('api/block/latest').then(response => {
-                    self.latest_block = response.data;
+
+                    if (self.latest_block.hash != response.data.hash) {
+                        self.latest_block = response.data;
+                        self.toggleMining();
+                        self.toggleMining();
+                    }
+
+
                 }).catch(error => {
                     console.log(error);
                 });

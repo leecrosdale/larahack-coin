@@ -47455,7 +47455,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getLatestBlock: function getLatestBlock() {
             var self = this;
             return axios.get('api/block/latest').then(function (response) {
-                self.latest_block = response.data;
+
+                if (self.latest_block.hash != response.data.hash) {
+                    self.latest_block = response.data;
+                    self.toggleMining();
+                    self.toggleMining();
+                }
             }).catch(function (error) {
                 console.log(error);
             });
