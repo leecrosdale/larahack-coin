@@ -40,7 +40,7 @@
                 'latest_block': 0,
                 'pending_transactions': [],
                 'hash': '',
-                'nonce': Math.floor(Math.random() * 999999999),
+                'nonce': 0,//Math.floor(Math.random() * 999999999),
                 'difficulty': 5,
                 'miningInterval': null,
                 'timestamp': Date.now(),
@@ -121,11 +121,11 @@
 
                this.miningInterval = setInterval(() => {
                     this.mineBlock();
-                },20);
+                },10);
 
                 this.checkingLatestBlockInterval = setInterval(() => {
                     this.getLatestBlock();
-                },60000);
+                },120000);
 
 
             },
@@ -134,17 +134,27 @@
 
                 var val = Array(this.difficulty + 1).join("0");
 
-                if (this.hash.substring(0, this.difficulty) !== val) {
+                var amount = 5;
 
-                    this.nonce++;
-                    this.hash = this.calculateHash();
-                    val = Array(this.difficulty + 1).join("0");
+                var i;
 
-                } else {
-                    console.log("BLOCK MINED: " + this.hash);
-                    this.found = true;
-                    this.toggleMining();
-                    this.toggleMining();
+
+                for (i = 0; i<amount; i++) {
+
+                    if (this.hash.substring(0, this.difficulty) !== val) {
+
+                        this.nonce++;
+                        this.hash = this.calculateHash();
+                        val = Array(this.difficulty + 1).join("0");
+
+
+                    } else {
+                        console.log("BLOCK MINED: " + this.hash);
+                        this.found = true;
+                        this.toggleMining();
+                        this.toggleMining();
+                    }
+
                 }
 
 
