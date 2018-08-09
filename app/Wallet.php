@@ -10,6 +10,11 @@ class Wallet extends Model
     protected $fillable = ['user_id','key'];
 
     public function transactions() {
-        return $this->hasMany('App\Transaction')->where('fromAddress', $this->key)->orWhere('toAddress', $this->key);
+        return Transaction::where('fromAddress', $this->key)->orWhere('toAddress', $this->key);
     }
+
+    public function completedTransactions() {
+        return Transaction::where('fromAddress', $this->key)->where('status',1)->orWhere('toAddress', $this->key)->where('status',1);
+    }
+
 }

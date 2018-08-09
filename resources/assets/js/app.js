@@ -18,6 +18,7 @@ window.SHA256 = require("crypto-js/sha256");
  */
 
 Vue.component('mining-component', require('./components/MiningComponent.vue'));
+Vue.component('wallet-payment', require('./components/WalletPayment.vue'));
 
 const app = new Vue({
     el: '#app'

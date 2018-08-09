@@ -6,6 +6,7 @@ use App\Block;
 use App\BlockChain;
 use App\Helpers\Coin;
 use App\Transaction;
+use App\Wallet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -99,6 +100,45 @@ class BlockController extends Controller
      */
     public function show($id)
     {
+
+    }
+
+
+    public function pay(Request $request) {
+
+        $userWallet = Auth::user()->wallet;
+
+        if (!$userWallet) {
+            return response()->json(['status' => 'error', 'message' => "Your wallet isn't set up, contact admin"]);
+        }
+
+        $amount = $request->input('amount');
+
+        if ($amount <= 0) {
+            return response()->json(['status' => 'error', 'message' => "Must be a positive amount"]);
+        }
+
+        $toWallet = Wallet::where('key',$request->input('toWallet'))->first();
+
+        if (!$toWallet) {
+            return response()->json(['status' => 'error', 'message' => "Wallet doesn't exist"]);
+        }
+
+        $balance = Auth::user()->balance();
+
+        if ($balance < $amount) {
+            return response()->json(['status' => 'error', 'message' => 'You do not have enough coin']);
+        }
+
+
+        Transaction::create([
+            'fromAddress' => $userWallet->key,
+            'toAddress' => $toWallet->key,
+            'amount' => $amount
+        ]);
+
+        return response()->json(['status' => 'ok', 'message' => 'Transaction Complete']);
+
 
     }
 

@@ -30,4 +30,21 @@ class User extends Authenticatable
     public function wallet() {
         return $this->hasOne('App\Wallet');
     }
+
+    public function balance() {
+        $transactions = $this->wallet->completedTransactions()->get();
+
+        $balance = 0;
+        foreach ($transactions as $transaction) {
+            if ($transaction->fromAddress = $this->key) {
+                $balance -= $transaction->amount;
+            } else {
+                $balance += $transaction->amount;
+            }
+        }
+
+        return $balance;
+
+    }
+
 }

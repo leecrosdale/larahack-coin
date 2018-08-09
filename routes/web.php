@@ -18,3 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/pay', 'HomeController@pay');
+
+Route::post('wallet/pay', 'Api\BlockController@pay');
+
+
